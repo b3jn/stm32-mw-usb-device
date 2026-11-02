@@ -1272,6 +1272,18 @@ static void DFU_Leave(USBD_HandleTypeDef *pdev)
     return;
   }
 
+  if ((DfuInterface->ManifestCheck != NULL) &&
+      (DfuInterface->ManifestCheck() != USBD_OK))
+  {
+    hdfu->dev_state = DFU_STATE_ERROR;
+    hdfu->dev_status[0] = DFU_ERROR_VENDOR;
+    hdfu->dev_status[1] = 0U;
+    hdfu->dev_status[2] = 0U;
+    hdfu->dev_status[3] = 0U;
+    hdfu->dev_status[4] = hdfu->dev_state;
+    return;
+  }
+
   hdfu->manif_state = DFU_MANIFEST_COMPLETE;
 
   if ((pDfuFunc->bmAttributes & DFU_MANIFEST_MASK) != 0U)
@@ -1353,4 +1365,3 @@ static void *USBD_DFU_GetDfuFuncDesc(uint8_t *pConfDesc)
 /**
   * @}
   */
-

@@ -212,6 +212,7 @@ typedef struct
 #if (USBD_DFU_VENDOR_EXIT_ENABLED == 1U)
   uint16_t (* LeaveDFU)(uint32_t Add);
 #endif /* USBD_DFU_VENDOR_EXIT_ENABLED */
+  uint16_t (* ManifestCheck)(void);
 } USBD_DFU_MediaTypeDef;
 
 typedef struct
